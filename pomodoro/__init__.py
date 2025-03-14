@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint
-from pomodoro import views
+from . import views
 
 def load_routes(instance: Flask | Blueprint):
     for url, func in views.ROUTES.items():
