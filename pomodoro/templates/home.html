@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        }
+        section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #clock {
+            font-size: 5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        #cycle {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 0.5rem;
+        }
+        #action_button {
+            background-color: #007bff;
+            color: white;
+        }
+        #action_button:hover {
+            background-color: #0056b3;
+        }
+        #skip_button {
+            background-color: #d7d7d7;
+            color: #333;
+        }
+        #skip_button:hover {
+            background-color: #b0b0b0;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div id="clock">--:--</div>
+        <p id="cycle">Pomodoro</p>
+        <div>
+            <button id="action_button">Start</button>
+            <button id="skip_button" onclick="handle_skip_button_click()">Next</button>
+        </div>
+    </section>
+    <script>
+        const clock = document.getElementById('clock');
+        const cycle = document.getElementById('cycle');
+        const action_button = document.getElementById('action_button');
+
+        let isRunning = false;
+
+        let cycles = [
+            {name: 'Focus', duration: 25},
+            {name: 'Short Break', duration: 5},
+            {name: 'Focus', duration: 25},
+            {name: 'Short Break', duration: 5},
+            {name: 'Last Focus', duration: 25},
+            {name: 'Long Break', duration: 15},
+        ]
+
+        let currentCycle = -1;
+        let time = 0
+    
+        function handle_time_pass() {
+            if (isRunning) {
+                if (time <= 0) {
+                    currentCycle += 1;
+                    if (currentCycle >= cycles.length) {
+                        currentCycle = 0;
+                    }
+                    time = cycles[currentCycle].duration * 60;
+                    clock.innerHTML = format_time(time);
+                    document.title = format_time(time) + " - " + cycles[currentCycle].name;
+                    cycle.innerHTML = cycles[currentCycle].name;
+                } else {
+                    time -= 1;
+                    clock.innerHTML = format_time(time);
+                    document.title = format_time(time) + " - " + cycles[currentCycle].name;
+                }
+            }
+        }
+        setInterval(handle_time_pass, 1000);
+    
+        function format_time(time) {
+            let minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+            return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function handle_action_button_click() {
+            if (isRunning) {
+                isRunning = false;
+                action_button.innerHTML = 'Start';
+            } else {
+                isRunning = true;
+                action_button.innerHTML = 'Stop';
+            }
+        }
+
+        action_button.onclick = handle_action_button_click;
+    
+        function handle_skip_button_click() {
+            time = 0;
+            handle_time_pass();
+        }
+    </script>
+</body>
+</html>
