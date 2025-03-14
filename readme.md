@@ -35,7 +35,6 @@ This is a project for a Pomodoro Timer, a time management technique that uses wo
     ```bash
     git clone https://github.com/nulocat/Pomodoro.git
     ```
-    ```
 
 2. Navigate to the project directory:
     ```bash
@@ -51,7 +50,7 @@ This is a project for a Pomodoro Timer, a time management technique that uses wo
     ```bash
     poetry run python run.py
     ```
-    
+
 5. Open your web browser and go to `http://127.0.0.1:5000` to start using the Pomodoro Timer. The application runs on port 5000 by default, but this can be configured if necessary.
 
 ### For Linux:
