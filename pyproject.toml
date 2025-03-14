@@ -1,0 +1,19 @@
+[project]
+name = "pomodoro"
+version = "0.1.0"
+description = "This is a project for a Pomodoro Timer, a time management technique that uses work and break intervals to increase productivity."
+authors = [
+    {name = "NuloCat",email = "nulocat@proton.me"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "flask (>=3.1.0,<4.0.0)",
+    "black (>=25.1.0,<26.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
